@@ -1,11 +1,18 @@
 import { z } from "zod";
 
+const bannedWords = ["spam", "badword", "stupid", "idiot"];
+
 export const MessageSchema = z.object({
   content: z
     .string()
     .min(1, "Message cannot be empty")
     .max(500, "Message is too long")
-    .refine((val) => !val.toLocaleLowerCase().includes("spam"), "Wrong message"),
+    .refine(
+      (val) => !bannedWords.some((word) => val.toLowerCase().includes(word)),
+      {
+        message: "Message contains inappropriate content",
+      },
+    ),
   courseLanguage: z.enum([
     "en",
     "es",

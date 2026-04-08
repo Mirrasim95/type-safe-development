@@ -30,3 +30,13 @@ export interface ChatMessage {
   timestamp: Date;
   safetyStatus: ContentSafetyStatus;
 }
+
+// Utility types
+export type MessagePreview = Pick<
+  ChatMessage,
+  "id" | "content" | "safetyStatus"
+>;
+export type MessageUpdate = Partial<
+  Pick<ChatMessage, "content" | "isModerated">
+>;
+export type PublicUser = Omit<User, "age">;
