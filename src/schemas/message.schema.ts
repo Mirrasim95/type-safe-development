@@ -8,7 +8,8 @@ export const MessageSchema = z.object({
     .min(1, "Message cannot be empty")
     .max(500, "Message is too long")
     .refine(
-      (val) => !bannedWords.some((word) => val.toLowerCase().includes(word)),
+      (val) =>
+        !bannedWords.some((word) => val.trim().toLowerCase().includes(word)),
       {
         message: "Message contains inappropriate content",
       },

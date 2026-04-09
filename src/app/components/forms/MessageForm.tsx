@@ -18,7 +18,7 @@ export function MessageForm() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col max-w-xs">
       <input
         {...register("content")}
         type="text"
@@ -28,7 +28,12 @@ export function MessageForm() {
       {errors.content && (
         <p style={{ color: "red" }}>{errors.content.message}</p>
       )}
-      <button onClick={handleSubmit(onSubmit)}>Send</button>
+      <button
+        className="border rounded-2xl p-2 active:bg-gray-600 mt-2"
+        onClick={handleSubmit(onSubmit)}
+      >
+        Send
+      </button>
     </div>
   );
 }
