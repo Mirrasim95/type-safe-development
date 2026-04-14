@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const bannedWords = ["spam", "badword", "stupid", "idiot"];
-
 export const MessageSchema = z.object({
   content: z
     .string()
