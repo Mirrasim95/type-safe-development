@@ -36,7 +36,12 @@ export type MessagePreview = Pick<
   ChatMessage,
   "id" | "content" | "safetyStatus"
 >;
-export type MessageUpdate = Partial<
-  Pick<ChatMessage, "content" | "isModerated">
->;
+export type MessageUpdate = Partial<Pick<ChatMessage, "content">>;
+
 export type PublicUser = Omit<User, "age">;
+
+export function isSafeMessage(
+  msg: ChatMessage,
+): msg is ChatMessage & { safetyStatus: "safe" } {
+  return msg.safetyStatus === "safe";
+}
