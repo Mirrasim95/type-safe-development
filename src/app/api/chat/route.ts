@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
     const validated = MessageSchema.parse(body);
     const safetyStatus = getSafetyStatus(validated.content);
 
-    if (!safetyStatus) {
-      throw new Error("Safety Error");
+    if (safetyStatus === "blocked") {
+      return NextResponse.json({ error: "Message blocked" }, { status: 400 });
     }
 
     const groq = createGroq({
@@ -23,8 +23,9 @@ export async function POST(req: NextRequest) {
       messages: [{ role: "user", content: validated.content }], // что сюда поставить?
     });
 
-    return stream.toDataStreamResponse();
-  } catch {
+    return stream.toTextStreamResponse();
+  } catch (error) {
+    console.error("Route error:", error);
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
   }
 }

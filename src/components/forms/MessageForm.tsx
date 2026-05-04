@@ -41,6 +41,10 @@ export function MessageForm() {
   });
 
   async function onSubmit(data: MessageInput) {
+    setMessages((prev) => [
+      ...prev,
+      { content: data.content, safetyStatus: "safe" },
+    ]);
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -53,15 +57,25 @@ export function MessageForm() {
       throw new Error(`HTTP error status: ${response.status}`);
     }
 
-    const result = await response.json();
+    setMessages((prev) => [...prev, { content: "", safetyStatus: "safe" }]);
 
-    setMessages((prev) => [
-      ...prev,
-      {
-        content: result.data.content,
-        safetyStatus: result.data.safetyStatus,
-      },
-    ]);
+    const reader = response.body!.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+
+      // Дописываем каждый кусок к последнему сообщению
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1].content += chunk;
+        return updated;
+      });
+    }
+
     reset({ content: "", courseLanguage: "en", authorId: "user-123" });
   }
 
