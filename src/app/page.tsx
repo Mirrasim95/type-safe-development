@@ -1,6 +1,6 @@
 "use client";
-import { MessageForm } from "@/app/components/forms/MessageForm";
-import { ErrorBoundary } from "@/app/components/ui/ErrorBoundary";
+import { MessageForm } from "@/components/forms/MessageForm";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 export default function Home() {
   return (

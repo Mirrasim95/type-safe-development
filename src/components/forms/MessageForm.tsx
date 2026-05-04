@@ -66,8 +66,8 @@ export function MessageForm() {
   }
 
   return (
-    <div className="flex flex-col h-screen max-w-2xl mx-auto border-x border-gray-200 bg-[#FCF9EC] shadow-2xl">
-      <div className="flex bg-[#E0F3DE] p-4 justify-center shadow-lg rounded-bl-2xl rounded-br-2xl">
+    <div className="flex flex-col h-screen max-w-2xl mx-auto border-x border-gray-200 bg-[#fefae9] shadow-2xl">
+      <div className="flex bg-[#E0F3DE] p-4 justify-center shadow-lg rounded-bl-2xl rounded-br-2xl ">
         <Image
           src={"/duolingo-1.svg"}
           width={60}
@@ -82,7 +82,7 @@ export function MessageForm() {
           className="pl-5"
         />
       </div>
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 ml-1 ">
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 ml-1">
         {messages.map((item, index) => (
           <div
             key={index}
@@ -98,12 +98,12 @@ export function MessageForm() {
       </div>
 
       {/* Инпут — фиксирован снизу */}
-      <div className="p-4 flex gap-2 bg-[#264F39] ">
+      <div className="p-4 flex gap-2 bg-[#264F39] rounded-tl-2xl rounded-tr-2xl">
         <input
           {...register("content")}
           type="text"
           placeholder="Type a message..."
-          className="flex-1 border rounded-2xl border-gray-400 p-2 bg-amber-50"
+          className="flex-1 border rounded-2xl border-gray-400 p-2 bg-white"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleSubmit(onSubmit)();

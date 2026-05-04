@@ -1,4 +1,4 @@
-import { ContentSafetyStatus } from "./../types/chat";
+import { ContentSafetyStatus } from "@/app/types/chat";
 
 const bannedWords = ["spam", "badword", "stupid", "idiot"];
 
