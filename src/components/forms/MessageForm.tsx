@@ -41,6 +41,7 @@ export function MessageForm() {
   });
 
   async function onSubmit(data: MessageInput) {
+    console.log("onSubmit called");
     setMessages((prev) => [
       ...prev,
       { content: data.content, safetyStatus: "safe" },
@@ -61,21 +62,22 @@ export function MessageForm() {
 
     const reader = response.body!.getReader();
     const decoder = new TextDecoder();
+    let chunkCount = 0;
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
+      chunkCount++;
       const chunk = decoder.decode(value);
-
-      // Дописываем каждый кусок к последнему сообщению
+      console.log(`chunk ${chunkCount}:`, JSON.stringify(chunk));
       setMessages((prev) => {
         const updated = [...prev];
-        updated[updated.length - 1].content += chunk;
+        updated[updated.length - 1].content = chunk;
         return updated;
       });
     }
-
+    console.log("total chunks:", chunkCount);
     reset({ content: "", courseLanguage: "en", authorId: "user-123" });
   }
 
