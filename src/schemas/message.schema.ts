@@ -9,6 +9,14 @@ export const MessageSchema = z.object({
     .enum(["en", "es", "fr", "de", "ja", "ko", "zh", "pt", "it", "ru"])
     .default("en"),
   authorId: z.string().default("user-123"),
+  history: z
+    .array(
+      z.object({
+        role: z.enum(["user", "assistant"]),
+        content: z.string(),
+      }),
+    )
+    .default([]),
 });
 
 export type MessageInput = z.infer<typeof MessageSchema>;

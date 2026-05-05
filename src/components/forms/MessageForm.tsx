@@ -51,7 +51,12 @@ export function MessageForm() {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        history: messages
+          .filter((m) => m.content !== "")
+          .map((m) => ({ role: m.role, content: m.content })),
+      }),
     });
 
     if (!response.ok) {
@@ -106,8 +111,8 @@ export function MessageForm() {
             key={index}
             className={
               item.role === "user"
-                ? "self-end bg-green-100 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 break-all"
-                : "bg-gray-200 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 break-all"
+                ? "self-end bg-green-100 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 wrap-break-word"
+                : "bg-gray-200 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 wrap-break-word"
             }
           >
             <p>{item.content}</p>

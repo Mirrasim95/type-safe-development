@@ -26,7 +26,10 @@ export async function POST(req: NextRequest) {
               politely decline and redirect them back to language practice.
               Help with: grammar, vocabulary, translation, pronunciation, conversation practice.
               Do NOT help with: recipes, cooking, news, entertainment, or any non-language topics.`,
-      messages: [{ role: "user", content: validated.content }],
+      messages: [
+        ...validated.history,
+        { role: "user", content: validated.content },
+      ],
     });
 
     return stream.toTextStreamResponse();
