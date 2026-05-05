@@ -20,7 +20,13 @@ export async function POST(req: NextRequest) {
 
     const stream = streamText({
       model: groq("llama-3.3-70b-versatile"),
-      messages: [{ role: "user", content: validated.content }], // что сюда поставить?
+      system: `You are a strict but friendly language tutor for Duolingo. 
+              Your ONLY job is to help students learn languages.
+              If a student asks about anything unrelated to language learning (recipes, sports, news, etc.), 
+              politely decline and redirect them back to language practice.
+              Help with: grammar, vocabulary, translation, pronunciation, conversation practice.
+              Do NOT help with: recipes, cooking, news, entertainment, or any non-language topics.`,
+      messages: [{ role: "user", content: validated.content }],
     });
 
     return stream.toTextStreamResponse();
