@@ -10,6 +10,7 @@ import Image from "next/image";
 type UIMessage = {
   content: string;
   safetyStatus: ContentSafetyStatus;
+  role: "user" | "assistant";
 };
 
 const statusColor: Record<ContentSafetyStatus, string> = {
@@ -43,7 +44,7 @@ export function MessageForm() {
   async function onSubmit(data: MessageInput) {
     setMessages((prev) => [
       ...prev,
-      { content: data.content, safetyStatus: "safe" },
+      { content: data.content, safetyStatus: "safe", role: "user" },
     ]);
     const response = await fetch("/api/chat", {
       method: "POST",
@@ -57,7 +58,10 @@ export function MessageForm() {
       throw new Error(`HTTP error status: ${response.status}`);
     }
 
-    setMessages((prev) => [...prev, { content: "", safetyStatus: "safe" }]);
+    setMessages((prev) => [
+      ...prev,
+      { content: "", safetyStatus: "safe", role: "assistant" },
+    ]);
 
     const reader = response.body!.getReader();
     const decoder = new TextDecoder();
@@ -100,7 +104,11 @@ export function MessageForm() {
         {messages.map((item, index) => (
           <div
             key={index}
-            className="bg-gray-200 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 break-all"
+            className={
+              item.role === "user"
+                ? "self-end bg-green-100 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 break-all"
+                : "bg-gray-200 rounded-2xl pl-5 pt-2 pb-2 pr-5 w-fit max-w-[75%] gap-2 break-all"
+            }
           >
             <p>{item.content}</p>
             <small className={statusColor[item.safetyStatus]}>
@@ -111,7 +119,6 @@ export function MessageForm() {
         <div ref={bottomRef} />
       </div>
 
-      {/* Инпут — фиксирован снизу */}
       <div className="p-4 flex gap-2 bg-[#264F39] rounded-tl-2xl rounded-tr-2xl">
         <input
           {...register("content")}
