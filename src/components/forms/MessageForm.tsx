@@ -46,6 +46,7 @@ export function MessageForm() {
       ...prev,
       { content: data.content, safetyStatus: "safe", role: "user" },
     ]);
+
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: {

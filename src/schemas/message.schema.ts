@@ -19,4 +19,4 @@ export const MessageSchema = z.object({
     .default([]),
 });
 
-export type MessageInput = z.infer<typeof MessageSchema>;
+export type MessageInput = z.input<typeof MessageSchema>;
