@@ -1,87 +1,61 @@
-# Welcome to 04 Type Safe Development
-
----
-
-## Task
-
-The goal of this project is to build a **type-safe classroom chat
-system** inspired by Duolingo's educational platform.
-
-The challenge is to ensure: - **Type safety** using TypeScript -
-**Runtime validation** using Zod - **Content safety filtering** for
-educational environments - **Reliable API communication** between
-frontend and backend
-
----
+# Duolingo AI Classroom
 
 ## Description
 
-This project implements a simplified version of a **Duolingo classroom
-chat system** using modern frontend and backend practices.
+A type-safe classroom chat system inspired by Duolingo, enhanced with AI tutoring capabilities. Built with Next.js App Router, TypeScript, and Groq AI. Students can practice languages, get grammar corrections, and receive personalized lessons.
 
-Key features:
+## AI Provider
 
-- TypeScript Architecture
-- Zod Validation
-- Content Safety System
-- Type-Safe API
-- React UI with real-time updates
-- Error handling with ErrorBoundary
+I chose **Groq** because it is free and has no significant limitations for small projects. It is also extremely fast compared to other providers.
 
----
+## Features
+
+- 🤖 AI language tutor powered by Groq
+- 💬 Real-time streaming responses
+- 🔤 Grammar correction and explanations
+- 🌍 Translation between languages
+- 📚 Homework and exercises generation
+- 🛡️ Content moderation with banned words filter
+- 💾 Conversation history — AI remembers context
+
+## How Streaming Works
+
+Instead of waiting for the full response, the AI sends text chunk by chunk so the user sees the answer being typed in real time.
 
 ## Installation
 
-Clone the repository:
-
-git clone `<your-repo-url>`{=html} cd duolingo-classroom-chat
-
-Install dependencies:
-
+```bash
+git clone <your-repo-url>
+cd duolingo-ai-classroom
 npm install
+```
 
-Run the project:
+Create `.env.local`:
 
+```
+GROQ_API_KEY=your_key_here
+```
+
+Run:
+
+```bash
 npm run dev
-
----
-
-## Usage
-
-Open:
-
-http://localhost:3000
-
-Type a message and send it.
-
-The system: - validates input - checks for inappropriate content -
-displays safety status
-
----
-
-## Example
-
-Hello → safe\
-a → flagged\
-you are stupid → blocked
-
----
+```
 
 ## Project Structure
 
-/app\
-/api/chat → API\
-/components → UI\
-/lib → business logic\
-/schemas → validation\
-/types → types
-
----
+```
+/app
+  /api/chat      → AI streaming endpoint
+/components      → UI components
+/lib             → business logic
+/schemas         → Zod validation
+/types           → TypeScript types
+```
 
 ## Core Concepts
 
-- TypeScript vs Zod
-- Type-safe API
-- Content filtering
-- Clean architecture
-
+- TypeScript + Zod for type safety
+- Groq AI with streaming responses
+- Conversation history for context
+- Content filtering for educational safety
