@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MessageSchema, type MessageInput } from "@/schemas/message.schema";
 import { useState, useRef, useEffect } from "react";
 import { ContentSafetyStatus } from "@/app/types/chat";
+import { getSafetyStatus } from "@/lib/contentSafety";
 import Image from "next/image";
 
 type UIMessage = {
@@ -44,7 +45,11 @@ export function MessageForm() {
   async function onSubmit(data: MessageInput) {
     setMessages((prev) => [
       ...prev,
-      { content: data.content, safetyStatus: "safe", role: "user" },
+      {
+        content: data.content,
+        safetyStatus: getSafetyStatus(data.content),
+        role: "user",
+      },
     ]);
 
     const response = await fetch("/api/chat", {
